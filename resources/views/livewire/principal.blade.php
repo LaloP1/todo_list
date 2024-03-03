@@ -12,7 +12,7 @@
                             <td>{{ $pendiente->tarea }}</td>
                         </div>
                         <div class="mt-[10px]">
-                            <x-danger-button>Eliminar</x-danger-button>
+                            <x-danger-button wire:click="delete({{ $pendiente->id }})">Eliminar</x-danger-button>
                         </div>
                     </div>
                 @empty

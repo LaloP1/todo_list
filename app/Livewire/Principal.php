@@ -21,11 +21,13 @@ class Principal extends Component
     }
 
     public function save(){
-       $post = Pendiente::create(
+       $pendiente = Pendiente::create(
         $this->only('tarea','descripcion')
        );
 
        $this->reset(['tarea', 'descripcion', 'open']);
+
+       $this-> pendientes= Pendiente::all();
     }
 
     public function toggleCompletada($pendienteId){
@@ -34,7 +36,17 @@ class Principal extends Component
         $pendiente->save();
     }
 
+    public function delete($pendienteId){
+         //Busca el id en el Modelo
+         $pendiente = Pendiente::find($pendienteId);
+         //Ejecuta la eliminacion
+         $pendiente->delete();
+         //Refresca los post
+         $this->dispatch('post-deleted', 'Articulo eliminado');
 
+         $this-> pendientes= Pendiente::all();
+
+    }
     public function render()
     {
         return view('livewire.principal');
